@@ -3,23 +3,23 @@ import User from "../models/userModel.js";
 import jwt from 'jsonwebtoken';
 
 // @desc    Auth user & get token
-// @route   GET /api/users/login
+// @route   POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+
     if (user && (await user.matchPassword(password))) {
-        const token = jwt.sign({ userId: user._id }, process.env.
-            JWT_SECRET, { 
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { 
                 expiresIn: '30d'
             });
 
             // Set JWT as HTTP-Only cookie
             res.cookie('jwt', token, {
                 httpOnly: true,
-                sameSite: 'strict',
                 secure: process.env.NODE_ENV !== 'development',
+                sameSite: 'strict',
                 maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
             });
 
@@ -73,7 +73,7 @@ const getUsers = asyncHandler(async (req, res) => {
 // @desc    get Users
 // @route   Get /api/users/:id
 // @access  Private/admin
-const getUsersByID = asyncHandler(async (req, res) => {
+const getUserByID = asyncHandler(async (req, res) => {
     res.send('get user by id');
 });
 
@@ -98,7 +98,7 @@ export {
     getUserProfile, 
     updateUserProfile, 
     getUsers, 
-    getUsersByID, 
+    getUserByID, 
     deleteUser, 
     updateUser 
 };
