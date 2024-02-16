@@ -4,7 +4,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
 import { useGetProductsQuery, useCreateProductMutation } from '../../slices/productsApiSlice'
-import {toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 const ProductListScreen = () => {
     const { data: products, error, isLoading, refetch } = useGetProductsQuery();
@@ -31,7 +31,7 @@ const ProductListScreen = () => {
             <h1>Products</h1>
         </Col>
         <Col className='text-end'>
-            <Button className='btn-sm m-3' onClick={ createProductHandler}>
+            <Button className='btn-sm m-3' onClick={ createProductHandler }>
                 <FaEdit /> Create Products
             </Button>
         </Col>
