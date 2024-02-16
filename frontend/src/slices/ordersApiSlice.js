@@ -11,6 +11,10 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
                 body: {...order},
                 credentials: 'include',
             }),
+            onError: (error, query) => {
+                // Handle error, e.g., show a toast or dispatch an action
+                console.error('An error occurred:', error);
+            },
         }),
         getOrderDetails: builder.query({
             query: (orderId) => ({

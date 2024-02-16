@@ -26,19 +26,30 @@ const getProductById = asyncHandler(async (req, res) => {
 // @route    POST /api/products
 // @access   Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
+    // Extract data from the request body
+    const { name, price, description, image, brand, category, countInStock } = req.body;
+
+    // Validate the request payload
+    if (!name || !price || !description || !image || !brand || !category || !countInStock) {
+        res.status(400).json({ message: "All fields are required" });
+        return;
+    }
+
+    // Create a new product instance
     const product = new Product({
-        name: 'Sample name',
-        price: 0,
-        user: req.user._id,
-        image: '/images/sample.jpg',
-        brand: 'Sample Brand',
-        category: 'Sample Category',
-        countInStock: 0,
-        numReviews: 0,
-        description: 'Sample Description'
+        name,
+        price,
+        description,
+        image,
+        brand,
+        category,
+        countInStock
     });
 
+    // Save the product to the database
     const createdProduct = await product.save();
+
+    // Send a success response
     res.status(201).json(createdProduct);
 });
 
