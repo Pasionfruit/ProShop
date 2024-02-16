@@ -4,7 +4,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  //Router,
   RouterProvider
 } from 'react-router-dom';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
