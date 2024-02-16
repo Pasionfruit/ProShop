@@ -11,18 +11,17 @@ const reviewSchema = mongoose.Schema({
         required: true,
     },
     rating: {
-        type: Number,
+        type: String,
         required: true,
     },
     comment: {
         type: String,
         required: true,
     },
-}, 
-{
- timestamps: true, 
-}
-);
+
+}, {
+    timestamps: true, 
+});
 
 const productSchema = new mongoose.Schema({
     user: {
@@ -71,6 +70,7 @@ const productSchema = new mongoose.Schema({
         required: true,
         default: 0,
     },
+
 }, {
     timestamps: true,
 });

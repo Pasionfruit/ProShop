@@ -64,7 +64,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/logout
 // @access  Private
 const logoutUser = asyncHandler(async (req, res) => {
-    res.cookie('jwt', '', {
+    res.cookie('jwt', '',{
         httpOnly: true,
         expires: new Date(0),
     });
@@ -107,7 +107,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
         const updatedUser = await user.save();
 
-        generateToken(res, updatedUser._id);
+        //generateToken(res, updatedUser._id);
 
         res.status(200).json({
             _id: updatedUser._id,
