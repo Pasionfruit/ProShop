@@ -1,5 +1,6 @@
 import { apiSlice } from './apiSlice';
-import { ORDERS_URL, PAYPAL_URL } from '../constants';
+import { ORDERS_URL } from '../constants';
+import { PAYPAL_URL } from '../constants';
 
 export const ordersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -10,10 +11,6 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
                 body: {...order},
                 credentials: 'include',
             }),
-            onError: (error, query) => {
-                // Handle error, e.g., show a toast or dispatch an action
-                console.error('An error occurred:', error);
-            },
         }),
         getOrderDetails: builder.query({
             query: (orderId) => ({
@@ -53,9 +50,8 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
         }),
         deliverOrder: builder.mutation({
             query: (orderId) => ({
-                url: `${ORDERS_URL}/${orderId}/delivered`,
+                url: `${ORDERS_URL}/${orderId}/deliver/`,
                 method: 'PUT',
-                credentials: 'include',
             }),
         }),
     }),
@@ -67,5 +63,6 @@ export const {
     usePayOrderMutation, 
     useGetPayPalClientIdQuery, 
     useGetMyOrdersQuery,
-    useDeliverOrderMutation, 
-    useGetOrdersQuery } = ordersApiSlice;
+    useGetOrdersQuery,
+    useDeliverOrderMutation
+} = ordersApiSlice;

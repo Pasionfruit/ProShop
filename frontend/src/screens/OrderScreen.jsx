@@ -6,22 +6,28 @@ import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery,
-        useDeliverOrderMutation} from '../slices/ordersApiSlice';
+import { 
+    useGetOrderDetailsQuery, 
+    usePayOrderMutation,
+    useGetPayPalClientIdQuery,
+    useDeliverOrderMutation
+    } from '../slices/ordersApiSlice';
 
 const OrderScreen = () => {
 
     const { id: orderId } = useParams();
 
     const { data: order, 
-        refetch, error, 
-        isLoading } = useGetOrderDetailsQuery(orderId);
+        refetch, 
+        isLoading,
+        error,
+    } = useGetOrderDetailsQuery(orderId);
 
     const [payOrder, {isLoading: loadingPay}] = usePayOrderMutation();
 
-    const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-
     const [deliverOrder, { isLoading: loadingDeliver}] = useDeliverOrderMutation();
+
+    const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
     const {data: paypal, isLoading: loadingPayPal, error: errorPayPal} = useGetPayPalClientIdQuery();
 
@@ -58,12 +64,12 @@ const OrderScreen = () => {
             }
         });
     }
-
-    async function onApproveTest(data, actions){ 
-        await payOrder({orderId, details: { payer: {} } });
-        refetch();
-        toast.success('Payment successful');
-    }
+    
+    // async function onApproveTest(data, actions){ 
+    //     await payOrder({orderId, details: { payer: {} } });
+    //     refetch();
+    //     toast.success('Payment successful');
+    // }
  
     function onError(err){ 
         toast.error(err.message);
