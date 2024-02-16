@@ -103,7 +103,7 @@ const OrderScreen = () => {
                             <strong>Email: </strong>{userInfo.email}
                         </p>
                         <p>
-                            <strong>Address: </strong>{order.shippingAddress.address}, {order.shippingAddress.city} 
+                            <strong>Address: </strong>{order.shippingAddress.address}, {order.shippingAddress.city} {' '} 
                             {order.shippingAddress.postalCode}, {order.shippingAddress.country}
                         </p>
                         {order.isDelivered ? (
