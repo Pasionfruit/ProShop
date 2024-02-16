@@ -16,15 +16,14 @@ const OrderScreen = () => {
     const { data: order, 
         refetch, error, 
         isLoading } = useGetOrderDetailsQuery(orderId);
+
     const [payOrder, {isLoading: loadingPay}] = usePayOrderMutation();
 
     const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
     const [deliverOrder, { isLoading: loadingDeliver}] = useDeliverOrderMutation();
 
-    const {data: paypal, 
-        isLoading: loadingPayPal, 
-        error: errorPayPal} = useGetPayPalClientIdQuery();
+    const {data: paypal, isLoading: loadingPayPal, error: errorPayPal} = useGetPayPalClientIdQuery();
 
     const { userInfo } = useSelector((state) => state.auth);
 
@@ -40,7 +39,6 @@ const OrderScreen = () => {
                 });
                 paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
             }
-
             if(order && !order.isPaid){
                 if(!window.paypal){
                     loadPayPalScript();
