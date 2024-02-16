@@ -6,8 +6,12 @@ import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery,
-        useDeliverOrderMutation} from '../slices/ordersApiSlice';
+import { 
+    useGetOrderDetailsQuery, 
+    usePayOrderMutation, 
+    useGetPayPalClientIdQuery,
+    useDeliverOrderMutation
+    } from '../slices/ordersApiSlice';
 
 const OrderScreen = () => {
 
