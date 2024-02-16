@@ -28,34 +28,29 @@ const PlaceOrderScreen = () => {
     //Error: Not authorized, no token
     const placeOrderHandler = async () => {
         try {
-            // Call the createOrder function
-            const res = await createOrder({
+            const { _id: orderId } = await createOrder({
                 orderItems: cart.cartItems,
                 shippingAddress: cart.shippingAddress,
                 paymentMethod: cart.paymentMethod,
                 itemsPrice: cart.itemsPrice,
                 shippingPrice: cart.shippingPrice,
                 taxPrice: cart.taxPrice,
-                totalPrice: cart.totalPrice,
-            });
+                totalPrice: cart.totalPrice
+            }).unwrap() || {}; // Default to an empty object if the response is undefined
     
-            // Log the response to the console to inspect its content
-            console.log('Response from createOrder:', res);
-    
-            // Check if the response contains _id and navigate accordingly
-            if (res && res._id) {
+            if (orderId) {
                 dispatch(clearCartItems());
-                navigate(`/order/${res._id}`);
+                navigate(`/order/${orderId}`);
             } else {
-                // Handle case where _id is not found in the response
-                toast.error('Failed to retrieve order ID');
+                throw new Error('Invalid response from createOrder');
             }
         } catch (error) {
-            // Handle any errors that occur during the request
-            console.error('Error placing order:', error);
-            toast.error('Failed to place order');
+            console.log('Error:', error); // Log the entire error object
+            const errorMessage = error?.data?.message || 'An error occurred'; // Use optional chaining and nullish coalescing for accessing nested properties
+            toast.error(errorMessage);
         }
     };
+    
     
   return(
 

@@ -7,7 +7,6 @@ import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
 
 import logo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
 
 const Header = () => {
     const { cartItems } = useSelector((state) => state.cart);
