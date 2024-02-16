@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import {Row, Col, ListGroup, Image, Card, Button} from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -58,6 +58,12 @@ const OrderScreen = () => {
             }
         });
     }
+
+    async function onApproveTest(data, actions){ 
+        await payOrder({orderId, details: { payer: {} } });
+        refetch();
+        toast.success('Payment successful');
+    }
  
     function onError(err){ 
         toast.error(err.message);
@@ -87,7 +93,6 @@ const OrderScreen = () => {
         });
     }
 
-
   return isLoading ? <Loader /> : error ? <Message variant='danger'/>   : ( 
     <>
         <h1>Order {order._id}</h1>
@@ -105,9 +110,7 @@ const OrderScreen = () => {
                             {order.shippingAddress.postalCode}, {order.shippingAddress.country}
                         </p>
                         {order.isDelivered ? (
-                            <Message variant='success'>
-                                Delivered on {order.deliveredAt}
-                            </Message>
+                            <Message variant='success'> Delivered on {order.deliveredAt}</Message>
                         ) : (
                             <Message variant='danger'>Not Delivered</Message>
                         )}
@@ -173,20 +176,23 @@ const OrderScreen = () => {
                                 <Col>Total</Col>
                                 <Col>${order.totalPrice}</Col>
                             </Row>
-
                         </ListGroup.Item>
                         
                         {!order.isPaid && (
                             <ListGroup.Item>
                                 {loadingPay && <Loader />}
+
                                 {isPending ? <Loader /> : (
                                     <div>
-                                        {/* <Button onClick={ onApproveTest } style={{marginBottom: '10px'}}>Test Pay Order</Button> */}
+                                        {/* <Button 
+                                            onClick={ onApproveTest } 
+                                            style={{marginBottom: '10px'}}
+                                        >Test Pay Order
+                                        </Button>  */}
                                         <div>
                                             <PayPalButtons createOrder={ createOrder}
                                                 onApprove={ onApprove }
                                                 onError={ onError }>
-
                                             </PayPalButtons>
                                         </div>
                                     </div>
@@ -207,10 +213,8 @@ const OrderScreen = () => {
                 </Card>
             </Col>
         </Row>
-    
     </>
   );
-
 }
 
 export default OrderScreen
