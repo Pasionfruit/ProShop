@@ -8,7 +8,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 url: `${USERS_URL}/auth`,
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },        
-                credentials: "include",
                 body: data,
             }),
         }),
@@ -17,7 +16,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 url: `${USERS_URL}`,
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },        
-                credentials: "include",
                 body: data,
             })
         }),
@@ -32,11 +30,17 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 url: `${USERS_URL}/profile`,
                 method: 'PUT',
                 body: data,
-                credentials: "include",
             }),
+        }),
+        getUsers: builder.query({
+            query: () => ({
+                url: USERS_URL,
+            }),
+            providesTags: ["Users"],
+            keepUnusedDataFor: 5,
         }),
     }),
 });
 
 export const { useLoginMutation, useLogoutMutation, useRegisterMutation,
-useProfileMutation } = usersApiSlice;
+useProfileMutation, useGetUsersQuery } = usersApiSlice;
